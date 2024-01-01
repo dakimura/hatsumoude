@@ -15,26 +15,8 @@ if 'generated' not in st.session_state:
     st.session_state['generated'] = []
 if 'past' not in st.session_state:
     st.session_state['past'] = []
-if 'messages' not in st.session_state:
-    st.session_state['messages'] = []
 if 'submitted' not in st.session_state:
     st.session_state['submitted'] = False
-
-def call_chatgpt(
-    user_msg: str,
-):
-    response = client.chat.completions.create(
-        messages=[
-            {"role": "user", "content": """
-あなたは初詣に来た人たちにありがたいお言葉を返す僧侶になりきってください。
-下記の2024年の初詣に来た人たちの祈願を聞いて、ありがたいお言葉を返してください。
-励ましたり、同意したり、目標達成のために始められることを示したりしてください。
----
-{}""".format(user_msg)}],
-model="gpt-3.5-turbo",
-stream=False,
-    )
-    return response
 
 def generate_response(prompt: str) -> str:
     template = """
@@ -54,13 +36,9 @@ def generate_response(prompt: str) -> str:
 
         if len(response) == 0:
             response:str = "ありがたいお言葉の生成に失敗しました。申し訳ありませんが、もう一度お参りしてください。"
-    except Exception as e:
+    except Exception:
         print(traceback.format_exc())
         response:str = "ありがたいお言葉の生成に失敗しました。申し訳ありませんが、もう一度お参りしてください。"
-
-    # ---
-    st.session_state['messages'].append({"role": "user", "content": prompt})
-    st.session_state['messages'].append({"role": "assistant", "content": response})
 
     return response
 
@@ -71,7 +49,8 @@ ph = st.empty()
 with container:
     #pprint(st.session_state['submitted'])
     with ph.form(key='my_form', clear_on_submit=True):
-        user_input = st.text_area("2024年の祈願:", key='input', height=50, placeholder="健康に暮らせますように。良いご縁がありますように。")
+        user_input = st.text_area("2024年の祈願:", key='input', height=50, placeholder="健康に暮らせますように。良いご縁がありますように。",
+                                  max_chars=100)
         submit_button = st.form_submit_button(label='お参りする')
 
     if submit_button and user_input:
