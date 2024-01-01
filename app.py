@@ -97,7 +97,7 @@ components.html(
     """
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" 
         data-text="AI初詣" 
-        data-url="https://hatsumoude.streamlit.io"
+        data-url="https://hatsumoude.streamlit.app/"
         data-show-count="false">
         data-size="Large" 
         data-hashtags="japan,streamlit,python"
