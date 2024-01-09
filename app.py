@@ -10,6 +10,7 @@ from pprint import pprint
 client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"),)
 st.title('AI初詣')
 st.markdown('by [@akkie30](https://twitter.com/akkie30)')
+st.text("AIから新年のありがたいお言葉を受け取りましょう...")
 st.image("https://1.bp.blogspot.com/-rNHLEYba6no/Wj4InHuNzUI/AAAAAAABJN4/_VlYonboxTMLc6rCg4IA6R0m_OvdvVwRgCLcBGAs/s600/omairi_family_kimono.png")
 if 'generated' not in st.session_state:
     st.session_state['generated'] = []
